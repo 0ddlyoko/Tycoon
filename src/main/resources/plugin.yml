@@ -1,0 +1,7 @@
+name: Tycoon
+main: me.oddlyoko.tycoon.Tycoon
+version: "1.0.0"
+api: [ "1.0.14" ]
+author: 0ddlyoko
+description: Tycoon plugin
+prefix: "Tycoon"

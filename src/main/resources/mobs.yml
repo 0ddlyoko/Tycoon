@@ -1,0 +1,15 @@
+mobs:
+  - id: chicken_gold_1
+    zone: chicken_zone
+    name: "Gold Chicken"
+    type: gold_chicken
+    probability: 1
+    maxAmount: 1
+    health: "10K"
+  - id: chicken_1
+    zone: chicken_zone
+    name: "Chicken"
+    type: chicken
+    probability: 100
+    maxAmount: 100
+    health: "1K"

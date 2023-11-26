@@ -1,0 +1,168 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.gold_chicken",
+				"texture_width": 64,
+				"texture_height": 32,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 1.5, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{
+							"origin": [-9, 12, -9],
+							"size": [18, 24, 18],
+							"pivot": [0, 24, 0],
+							"rotation": [90, 0, 0],
+							"uv": {
+								"north": {"uv": [6, 15], "uv_size": [6, 8]},
+								"east": {"uv": [0, 15], "uv_size": [6, 8]},
+								"south": {"uv": [18, 15], "uv_size": [6, 8]},
+								"west": {"uv": [12, 15], "uv_size": [6, 8]},
+								"up": {"uv": [6, 9], "uv_size": [6, 6]},
+								"down": {"uv": [12, 15], "uv_size": [6, -6]}
+							}
+						}
+					]
+				},
+				{
+					"name": "head",
+					"pivot": [0, 27, -12],
+					"cubes": [
+						{
+							"origin": [-6, 27, -18],
+							"size": [12, 18, 9],
+							"uv": {
+								"north": {"uv": [3, 3], "uv_size": [4, 6]},
+								"east": {"uv": [0, 3], "uv_size": [3, 6]},
+								"south": {"uv": [10, 3], "uv_size": [4, 6]},
+								"west": {"uv": [7, 3], "uv_size": [3, 6]},
+								"up": {"uv": [3, 0], "uv_size": [4, 3]},
+								"down": {"uv": [7, 3], "uv_size": [4, -3]}
+							}
+						}
+					],
+					"locators": {
+						"lead": [0, 27, -12]
+					}
+				},
+				{
+					"name": "comb",
+					"parent": "head",
+					"pivot": [0, 27, -12],
+					"cubes": [
+						{
+							"origin": [-3, 27, -21],
+							"size": [6, 6, 6],
+							"uv": {
+								"north": {"uv": [16, 6], "uv_size": [2, 2]},
+								"east": {"uv": [14, 6], "uv_size": [2, 2]},
+								"south": {"uv": [20, 6], "uv_size": [2, 2]},
+								"west": {"uv": [18, 6], "uv_size": [2, 2]},
+								"up": {"uv": [16, 4], "uv_size": [2, 2]},
+								"down": {"uv": [18, 6], "uv_size": [2, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "beak",
+					"parent": "head",
+					"pivot": [0, 27, -12],
+					"cubes": [
+						{
+							"origin": [-6, 33, -24],
+							"size": [12, 6, 6],
+							"uv": {
+								"north": {"uv": [16, 2], "uv_size": [4, 2]},
+								"east": {"uv": [14, 2], "uv_size": [2, 2]},
+								"south": {"uv": [22, 2], "uv_size": [4, 2]},
+								"west": {"uv": [20, 2], "uv_size": [2, 2]},
+								"up": {"uv": [16, 0], "uv_size": [4, 2]},
+								"down": {"uv": [20, 2], "uv_size": [4, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "leg0",
+					"pivot": [-6, 15, 3],
+					"cubes": [
+						{
+							"origin": [-9, 0, -6],
+							"size": [9, 15, 9],
+							"uv": {
+								"north": {"uv": [29, 3], "uv_size": [3, 5]},
+								"east": {"uv": [26, 3], "uv_size": [3, 5]},
+								"south": {"uv": [35, 3], "uv_size": [3, 5]},
+								"west": {"uv": [32, 3], "uv_size": [3, 5]},
+								"up": {"uv": [29, 0], "uv_size": [3, 3]},
+								"down": {"uv": [32, 3], "uv_size": [3, -3]}
+							}
+						}
+					]
+				},
+				{
+					"name": "leg1",
+					"pivot": [3, 15, 3],
+					"cubes": [
+						{
+							"origin": [0, 0, -6],
+							"size": [9, 15, 9],
+							"uv": {
+								"north": {"uv": [29, 3], "uv_size": [3, 5]},
+								"east": {"uv": [26, 3], "uv_size": [3, 5]},
+								"south": {"uv": [35, 3], "uv_size": [3, 5]},
+								"west": {"uv": [32, 3], "uv_size": [3, 5]},
+								"up": {"uv": [29, 0], "uv_size": [3, 3]},
+								"down": {"uv": [32, 3], "uv_size": [3, -3]}
+							}
+						}
+					]
+				},
+				{
+					"name": "wing0",
+					"pivot": [-9, 33, 0],
+					"cubes": [
+						{
+							"origin": [-12, 21, -9],
+							"size": [3, 12, 18],
+							"uv": {
+								"north": {"uv": [30, 19], "uv_size": [1, 4]},
+								"east": {"uv": [24, 19], "uv_size": [6, 4]},
+								"south": {"uv": [37, 19], "uv_size": [1, 4]},
+								"west": {"uv": [31, 19], "uv_size": [6, 4]},
+								"up": {"uv": [30, 13], "uv_size": [1, 6]},
+								"down": {"uv": [31, 19], "uv_size": [1, -6]}
+							}
+						}
+					]
+				},
+				{
+					"name": "wing1",
+					"pivot": [9, 33, 0],
+					"cubes": [
+						{
+							"origin": [9, 21, -9],
+							"size": [3, 12, 18],
+							"uv": {
+								"north": {"uv": [30, 19], "uv_size": [1, 4]},
+								"east": {"uv": [24, 19], "uv_size": [6, 4]},
+								"south": {"uv": [37, 19], "uv_size": [1, 4]},
+								"west": {"uv": [31, 19], "uv_size": [6, 4]},
+								"up": {"uv": [30, 13], "uv_size": [1, 6]},
+								"down": {"uv": [31, 19], "uv_size": [1, -6]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
