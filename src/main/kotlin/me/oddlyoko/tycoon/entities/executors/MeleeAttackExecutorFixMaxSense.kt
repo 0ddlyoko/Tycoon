@@ -5,6 +5,9 @@ import cn.nukkit.entity.EntityIntelligent
 import cn.nukkit.entity.ai.executor.MeleeAttackExecutor
 import cn.nukkit.entity.ai.memory.MemoryType
 
+/**
+ * Custom MeleeAttackExecutor class that fix bug where the entity still attack the target even if it's out of range
+ */
 class MeleeAttackExecutorFixMaxSense(
     memory: MemoryType<out Entity>?,
     speed: Float,
