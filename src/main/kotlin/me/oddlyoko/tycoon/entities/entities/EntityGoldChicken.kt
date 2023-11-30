@@ -99,8 +99,7 @@ class EntityGoldChicken(chunk: FullChunk, nbt: CompoundTag?) : EntityIntelligent
                 Behavior(
                     FlatRandomRoamExecutor(0.22f, 12, 100, false, -1, true, 10),
                     { true },
-                    1, 1
-                )
+                    1, 1)
             ),
             setOf(
                 // Nearest player

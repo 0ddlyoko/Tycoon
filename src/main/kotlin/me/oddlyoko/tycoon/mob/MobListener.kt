@@ -26,6 +26,7 @@ object MobListener: Listener {
         val multiplicator = entity.namedTag.getInt("tycoon_health_multiplicator")
         if (multiplicator == 0)
             return
+        // TODO Care if the damage is too high, we could have an overflow
         damage.convertTo(multiplicator)
         e.damage = damage.number.toFloat()
         var health = entity.health - e.finalDamage
@@ -78,8 +79,8 @@ object MobListener: Listener {
         val entity = e.entity
         if (!entity.namedTag.getBoolean("tycoon"))
             return
-        val mobUuid = entity.namedTag.getString("tycoon_mob_uuid")
-        if (mobUuid != Tycoon.MOB_UUID) {
+        val mobUuid = entity.namedTag.getString("tycoon_uuid")
+        if (mobUuid != Tycoon.RANDOM_UUID) {
             // Mob from a different server instance
             // We need to remove it
             e.isCancelled = true

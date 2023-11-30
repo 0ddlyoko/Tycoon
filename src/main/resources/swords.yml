@@ -1,0 +1,6 @@
+swords:
+  - id: wooden_sword
+    name: "Wooden Sword"
+    type: "wooden_sword"
+    damage: "100"
+    rarity: "COMMON"

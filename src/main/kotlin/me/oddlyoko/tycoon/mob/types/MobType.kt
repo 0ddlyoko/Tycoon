@@ -20,7 +20,7 @@ interface MobType {
         entity.namedTag.putBoolean("tycoon", true)
         entity.namedTag.putInt("tycoon_health_multiplicator", mob.health.multiplicator)
         entity.namedTag.putString("tycoon_mob", mob.id)
-        entity.namedTag.putString("tycoon_mob_uuid", Tycoon.MOB_UUID)
+        entity.namedTag.putString("tycoon_uuid", Tycoon.RANDOM_UUID)
         entity.spawnToAll()
         return entity
     }
