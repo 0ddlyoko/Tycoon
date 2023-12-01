@@ -3,7 +3,7 @@ package me.oddlyoko.tycoon.util
 class CustomBigNumber(
     var number: Int,
     var multiplicator: Int,
-) {
+): Cloneable {
 
     fun set(number: Int, multiplicator: Int): CustomBigNumber {
         this.number = number
@@ -63,6 +63,8 @@ class CustomBigNumber(
      * Verify if this number needs to be increased or decreased
      */
     fun verify(): CustomBigNumber {
+        if (number < 0)
+            number = 0
         if (number == 0) {
             // This number is 0, we don't care about the multiplicator
             multiplicator = 1
@@ -136,6 +138,8 @@ class CustomBigNumber(
             string = "0"
         return string
     }
+
+    public override fun clone(): CustomBigNumber = CustomBigNumber(number, multiplicator)
 
     companion object {
         val MULT_TO_STRING = arrayOf(

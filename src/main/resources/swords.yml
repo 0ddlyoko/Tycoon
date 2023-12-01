@@ -1,6 +1,16 @@
 swords:
   - id: wooden_sword
     name: "Wooden Sword"
-    type: "wooden_sword"
+    type: "minecraft:wooden_sword"
     damage: "100"
     rarity: "COMMON"
+  - id: diamond_sword
+    name: "Diamond Sword"
+    type: "minecraft:diamond_sword"
+    damage: "1000"
+    rarity: "RARE"
+  - id: netherite_sword
+    name: "Netherite Sword"
+    type: "minecraft:netherite_sword"
+    damage: "9990"
+    rarity: "EPIC"

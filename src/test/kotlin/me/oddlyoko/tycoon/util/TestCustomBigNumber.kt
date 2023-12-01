@@ -119,6 +119,12 @@ class TestCustomBigNumber {
         number.remove(CustomBigNumber(1, 40))
         assertEquals(0, number.number)
         assertEquals(1, number.multiplicator)
+
+        // Check remove should be 0
+        number = CustomBigNumber(100, 1)
+        number.remove(CustomBigNumber(101, 1))
+        assertEquals(0, number.number)
+        assertEquals(1, number.multiplicator)
     }
 
     @Test

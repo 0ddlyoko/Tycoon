@@ -1,15 +1,49 @@
 package me.oddlyoko.tycoon.mob
 
+import cn.nukkit.entity.Entity
+import cn.nukkit.entity.EntityHumanType
 import cn.nukkit.event.EventHandler
 import cn.nukkit.event.Listener
 import cn.nukkit.event.entity.EntityDamageByEntityEvent
 import cn.nukkit.event.entity.EntityDamageEvent
+import cn.nukkit.event.entity.EntityDamageEvent.DamageModifier
 import cn.nukkit.event.entity.EntityDeathEvent
 import cn.nukkit.event.entity.EntitySpawnEvent
+import cn.nukkit.inventory.EntityInventoryHolder
+import cn.nukkit.item.Item
 import me.oddlyoko.tycoon.Tycoon
 import me.oddlyoko.tycoon.util.CustomBigNumber
 
 object MobListener: Listener {
+
+    private fun getBaseDamageOfEntity(entity: Entity): CustomBigNumber {
+        if (entity.namedTag == null || !entity.namedTag.contains("tycoon"))
+            return CustomBigNumber(1, 1)
+        val baseDamage = entity.namedTag.getInt("tycoon_entity_base_damage")
+        val baseMultiplicator = entity.namedTag.getInt("tycoon_entity_base_multiplicator")
+        return CustomBigNumber(baseDamage, baseMultiplicator)
+    }
+
+    private fun getDamageOfItem(item: Item): CustomBigNumber {
+        if (!item.hasCompoundTag() || !item.namedTag.contains("tycoon"))
+            return CustomBigNumber(1, 1)
+        val itemDamage = item.namedTag.getInt("tycoon_item_damage")
+        val itemMultiplicator = item.namedTag.getInt("tycoon_item_multiplicator")
+        return CustomBigNumber(itemDamage, itemMultiplicator)
+    }
+
+    private fun getHealthOfEntity(entity: Entity): CustomBigNumber {
+        if (entity.namedTag == null || !entity.namedTag.contains("tycoon"))
+            return CustomBigNumber(1, 1)
+        val health = entity.namedTag.getInt("tycoon_entity_health")
+        val multiplicator = entity.namedTag.getInt("tycoon_entity_health_multiplicator")
+        return CustomBigNumber(health, multiplicator)
+    }
+
+    private fun saveHealthOfEntity(entity: Entity, newHealth: CustomBigNumber) {
+        entity.namedTag.putInt("tycoon_entity_health", newHealth.number)
+        entity.namedTag.putInt("tycoon_entity_health_multiplicator", newHealth.multiplicator)
+    }
 
     @EventHandler
     fun onMobHit(e: EntityDamageByEntityEvent) {
@@ -20,41 +54,34 @@ object MobListener: Listener {
         val entity = e.entity
         if (!entity.namedTag.getBoolean("tycoon"))
             return
+        DamageModifier.entries.forEach { e.setDamage(0f, it) }
+        entity.health = 20f
+
         val damager = e.damager
-        // TODO Calculate the amount of damage
-        val damage = CustomBigNumber(100, 1)
-        val multiplicator = entity.namedTag.getInt("tycoon_health_multiplicator")
-        if (multiplicator == 0)
+        // Calculate damage
+        var item = if (damager is EntityInventoryHolder) damager.itemInHand else Item.AIR_ITEM
+        if (item.id == 0 && damager is EntityHumanType)
+            item = damager.inventory.getItemInHand() ?: Item.AIR_ITEM
+        val baseDamage = getBaseDamageOfEntity(damager)
+        val itemDamage = getDamageOfItem(item)
+        val finalDamage = baseDamage.clone().add(itemDamage)
+
+        // Calculate health
+        val entityHealth = getHealthOfEntity(entity)
+        val newHealth = entityHealth.clone().remove(finalDamage)
+        if (newHealth.number == 0) {
+            // Entity is dead
+            e.damage = 21_07_1998f
             return
-        // TODO Care if the damage is too high, we could have an overflow
-        damage.convertTo(multiplicator)
-        e.damage = damage.number.toFloat()
-        var health = entity.health - e.finalDamage
-        if (health <= 0) {
-            health = 0F
         }
-        val newHealth = CustomBigNumber(health.toInt(), multiplicator).verify()
-        // If the multiplicator is different, we need to update the current multiplicator and modify the amount of damage.
-        // As we don't have an event if the health is modified, we need to modify the damage here.
-        // We can modify the damage by multiplying by 1_000 * the difference between the old and the new multiplicator.
-        // We also need to update the current health
-        if (newHealth.multiplicator != multiplicator) {
-            entity.namedTag.putInt("tycoon_health_multiplicator", newHealth.multiplicator)
-            val differenceMultiplier = newHealth.multiplicator - multiplicator
-            EntityDamageEvent.DamageModifier.entries.forEach {
-                val damageModifier = e.getDamage(it)
-                if (damageModifier.toInt() == 0)
-                    return@forEach
-                e.setDamage(damageModifier * differenceMultiplier * 1000, it)
-            }
-            entity.health *= 1000 * differenceMultiplier
-        }
+        // Save health to entity
+        saveHealthOfEntity(entity, newHealth)
 
         // Update the name of the mob
         val mobId = entity.namedTag.getString("tycoon_mob")
         if (mobId.isEmpty())
             return
-        entity.nameTag = "${MobManager.getMob(mobId)?.type?.name()} ($newHealth ❤)"
+        entity.nameTag = "${MobManager.getMob(mobId)?.name} ($newHealth ❤)"
     }
 
     @EventHandler
@@ -67,6 +94,10 @@ object MobListener: Listener {
         if (mobId.isEmpty())
             return
         val mob = MobManager.getMob(mobId) ?: return
+
+        e.drops = null
+
+        // Spawn again
         val zone = mob.zone
         mob.currentMobCount--
         zone.currentMobCount--

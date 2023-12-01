@@ -10,12 +10,9 @@ import me.oddlyoko.tycoon.entities.entities.EntityGoldChicken
 import me.oddlyoko.tycoon.item.Item
 import me.oddlyoko.tycoon.item.ItemManager
 import me.oddlyoko.tycoon.item.ItemRarity
-import me.oddlyoko.tycoon.item.types.WoodenSwordType
 import me.oddlyoko.tycoon.mob.Mob
 import me.oddlyoko.tycoon.mob.MobListener
 import me.oddlyoko.tycoon.mob.MobManager
-import me.oddlyoko.tycoon.mob.types.ChickenMobType
-import me.oddlyoko.tycoon.mob.types.GoldChickenMobType
 import me.oddlyoko.tycoon.util.CustomBigNumber
 import me.oddlyoko.tycoon.zone.Zone
 import me.oddlyoko.tycoon.zone.ZoneListener
@@ -33,20 +30,14 @@ class Tycoon: PluginBase() {
         loadRegions()
         logger.info("${ZoneManager.zones.size} regions loaded")
         // Mobs
-        logger.info("Loading mob entities")
+        logger.info("Loading custom mob entities")
         loadCustomMobEntities()
-        logger.info("Loading mob types")
-        loadMobTypes()
-        logger.info("${MobManager.mobTypes.size} mob types loaded")
         logger.info("Loading mobs")
         loadMobs()
         logger.info("${MobManager.mobs.size} mobs loaded")
         // Items
-        logger.info("Loading items")
+        logger.info("Loading custom items")
         loadCustomItems()
-        logger.info("Loading item types")
-        loadItemTypes()
-        logger.info("${ItemManager.itemTypes.size} item types loaded")
         logger.info("Loading items")
         loadItems()
         logger.info("${ItemManager.items.size} items loaded")
@@ -83,22 +74,11 @@ class Tycoon: PluginBase() {
         Entity.registerCustomEntity(CustomClassEntityProvider(EntityGoldChicken::class.java))
     }
 
-    private fun loadMobTypes() {
-        MobManager.registerMobType("chicken", ChickenMobType)
-        MobManager.registerMobType("gold_chicken", GoldChickenMobType)
-    }
-
     private fun loadMobs() {
         Config.mobsConfig.mobs.forEach { mobConfig ->
             val zone = ZoneManager.getZone(mobConfig.zone)
             if (zone == null) {
                 logger.error("Zone ${mobConfig.zone} not found")
-                server.shutdown()
-                return
-            }
-            val type = MobManager.getMobType(mobConfig.type)
-            if (type == null) {
-                logger.error("Mob type ${mobConfig.type} not found")
                 server.shutdown()
                 return
             }
@@ -112,7 +92,7 @@ class Tycoon: PluginBase() {
                 id = mobConfig.id,
                 zone = zone,
                 name = mobConfig.name,
-                type = type,
+                type = mobConfig.type,
                 probability = mobConfig.probability,
                 maxAmount = mobConfig.maxAmount,
                 health = health,
@@ -127,18 +107,8 @@ class Tycoon: PluginBase() {
         // TODO
     }
 
-    private fun loadItemTypes() {
-        ItemManager.registerItemType("wooden_sword", WoodenSwordType)
-    }
-
     private fun loadItems() {
         Config.swordsConfig.swords.forEach { swordConfig ->
-            val type = ItemManager.getItemType(swordConfig.type)
-            if (type == null) {
-                logger.error("Item type ${swordConfig.type} not found")
-                server.shutdown()
-                return
-            }
             val damage = CustomBigNumber.fromString(swordConfig.damage)
             if (damage == null) {
                 logger.error("Invalid damage for item ${swordConfig.id}: ${swordConfig.damage}")
@@ -148,7 +118,7 @@ class Tycoon: PluginBase() {
             val item = Item(
                 id = swordConfig.id,
                 name = swordConfig.name,
-                type = type,
+                type = swordConfig.type,
                 damage = damage,
                 rarity = ItemRarity.fromString(swordConfig.rarity.toString()),
             )
