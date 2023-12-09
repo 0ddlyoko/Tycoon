@@ -8,4 +8,6 @@ data class MobConfig(
     val probability: Int,
     val maxAmount: Int,
     val health: String,
+    val exp: Int,
+    val drops: List<MobDropConfig>,
 )

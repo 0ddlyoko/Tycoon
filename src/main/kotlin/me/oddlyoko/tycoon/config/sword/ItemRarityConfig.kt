@@ -1,6 +1,8 @@
 package me.oddlyoko.tycoon.config.sword
 
-enum class SwordRarity {
+import me.oddlyoko.tycoon.item.ItemRarity
+
+enum class ItemRarityConfig {
     COMMON,
     RARE,
     EPIC,
@@ -10,8 +12,10 @@ enum class SwordRarity {
     SPECIAL,
     UNKNOWN;
 
+    fun toRarity(): ItemRarity = ItemRarity.fromString(name)
+
     companion object {
-        fun fromString(str: String): SwordRarity {
+        fun fromString(str: String): ItemRarityConfig {
             return try {
                 valueOf(str)
             } catch (ex: Exception) {

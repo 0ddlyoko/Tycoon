@@ -6,6 +6,11 @@ mobs:
     probability: 50
     maxAmount: 1
     health: "10K"
+    drops:
+      - item: wooden_sword
+        probability: 700
+      - item: diamond_sword
+        probability: 200
   - id: chicken_1
     zone: chicken_zone
     name: "Chicken"
@@ -13,3 +18,11 @@ mobs:
     probability: 50
     maxAmount: 100
     health: "1K"
+    exp: 10
+    drops:
+      - item: nothing
+        probability: 799
+      - item: wooden_sword
+        probability: 200
+      - item: diamond_sword
+        probability: 1

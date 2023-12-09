@@ -40,7 +40,7 @@ object MobListener: Listener {
         return CustomBigNumber(health, multiplicator)
     }
 
-    private fun saveHealthOfEntity(entity: Entity, newHealth: CustomBigNumber) {
+    private fun setHealthOfEntity(entity: Entity, newHealth: CustomBigNumber) {
         entity.namedTag.putInt("tycoon_entity_health", newHealth.number)
         entity.namedTag.putInt("tycoon_entity_health_multiplicator", newHealth.multiplicator)
     }
@@ -75,7 +75,7 @@ object MobListener: Listener {
             return
         }
         // Save health to entity
-        saveHealthOfEntity(entity, newHealth)
+        setHealthOfEntity(entity, newHealth)
 
         // Update the name of the mob
         val mobId = entity.namedTag.getString("tycoon_mob")
@@ -95,7 +95,7 @@ object MobListener: Listener {
             return
         val mob = MobManager.getMob(mobId) ?: return
 
-        e.drops = null
+        e.drops = arrayOf(mob.chooseItemToDrop())
 
         // Spawn again
         val zone = mob.zone

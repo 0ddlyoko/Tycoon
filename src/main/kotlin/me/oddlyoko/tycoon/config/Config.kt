@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import me.oddlyoko.tycoon.config.mob.MobsConfig
-import me.oddlyoko.tycoon.config.sword.SwordsConfig
+import me.oddlyoko.tycoon.config.sword.ItemsConfig
 import me.oddlyoko.tycoon.config.world.WorldsConfig
 import java.io.File
 
@@ -14,7 +14,7 @@ object Config {
         private set
     lateinit var mobsConfig: MobsConfig
         private set
-    lateinit var swordsConfig: SwordsConfig
+    lateinit var itemsConfig: ItemsConfig
         private set
 
     fun loadConfig(dataFolder: File) {
@@ -41,6 +41,6 @@ object Config {
         val mapper = ObjectMapper(YAMLFactory())
         mapper.registerModule(KotlinModule.Builder().build())
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        swordsConfig = mapper.readValue(dataFolder.resolve("swords.yml"), SwordsConfig::class.java)
+        itemsConfig = mapper.readValue(dataFolder.resolve("items.yml"), ItemsConfig::class.java)
     }
 }
